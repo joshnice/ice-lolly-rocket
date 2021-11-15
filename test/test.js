@@ -9,7 +9,7 @@ describe('Array', function() {
 
 describe('Basic Maths', function() {
     it('Sum ', function() {
-        assert.equal(1 + 2, 3);
+        assert.equal(1 + 2, 4);
     });
   });
   
