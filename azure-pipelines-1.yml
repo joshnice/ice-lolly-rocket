@@ -19,7 +19,10 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
-  
+
+- script: npm test
+  displayName: npm test
+
 - task: CopyFiles@2
   inputs:
     SourceFolder: './build'
