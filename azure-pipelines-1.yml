@@ -23,12 +23,6 @@ steps:
 - script: npm test
   displayName: tests
 
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: JUnit
-    testResultsFiles: '**/test-results.xml'
-
 - task: CopyFiles@2
   inputs:
     SourceFolder: './build'
