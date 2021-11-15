@@ -24,4 +24,5 @@ steps:
     awsCredentials: 'AWS-S3-Connection'
     regionName: 'eu-west-2'
     bucketName: 'www.ice-rocket-lollys.co.uk'
+    sourceFolder: './build'
     globExpressions: '**'
