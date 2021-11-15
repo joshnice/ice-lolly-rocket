@@ -4,7 +4,7 @@ import './App.css';
 
 function App() {
   return (
-    <div>Hello Ice Lolly Rocket Fans</div>
+    <div>Hello Ice Lolly Rocket Fans!</div>
   );
 }
 
