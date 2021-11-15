@@ -18,3 +18,10 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+- task: S3Upload@1
+  inputs:
+    awsCredentials: 'AWS-S3-Connection'
+    regionName: 'eu-west-2'
+    bucketName: 'www.ice-rocket-lollys.co.uk'
+    sourceFolder: './build'
+    globExpressions: '**'
