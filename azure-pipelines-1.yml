@@ -19,8 +19,13 @@ jobs:
 
         - script: npm install
           displayName: 'NPM Install'
-
-          # need to cache
+        - task: RestoreAndSaveCache@1
+          inputs:
+            keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+            targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+            vstsFeed: '7fb370be-7369-4a9d-a42b-4d5e569e7587'
+            platformIndependent: true
+          displayName: 'Cache Node Modules' 
 
   - job: build
     pool:
