@@ -19,13 +19,14 @@ jobs:
 
         - script: npm install
           displayName: 'NPM Install'
-        - task: RestoreAndSaveCache@1
+        - task: SaveCache@1
           inputs:
             keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
             targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
             vstsFeed: '7fb370be-7369-4a9d-a42b-4d5e569e7587'
             platformIndependent: true
-          displayName: 'Cache Node Modules' 
+            alias: 'NPM Install'
+          displayName: 'Save Cache Node Modules' 
 
   - job: build
     pool:
@@ -39,10 +40,8 @@ jobs:
             targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
             vstsFeed: '7fb370be-7369-4a9d-a42b-4d5e569e7587'
             platformIndependent: true
-          displayName: 'Cache Node Modules' 
-        
-        - script: npm install
-          displayName: 'NPM Install'
+            alias: 'NPM Install'
+          displayName: 'Restore Cache Node Modules' 
 
         - script: npm run build 
           displayName: 'npm install and build'
