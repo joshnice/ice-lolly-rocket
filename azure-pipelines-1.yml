@@ -17,9 +17,6 @@ jobs:
             versionSpec: '10.x'
           displayName: 'Install Node.js'
 
-        - script: npm install
-          displayName: 'NPM Install'
-
         - task: RestoreAndSaveCache@1
           inputs:
             keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
@@ -27,6 +24,9 @@ jobs:
             vstsFeed: 'f6a71ac1-5058-48e6-9e2e-edf7b5360e1b'
             platformIndependent: true
             alias: 'node_package_manager_modules'
+        
+        - script: npm install
+          displayName: 'NPM Install'
 
         - script: npm run build 
           displayName: 'npm install and build'
