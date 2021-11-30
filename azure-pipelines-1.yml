@@ -28,21 +28,6 @@ jobs:
             alias: 'NPM Install'
           displayName: 'Save Cache Node Modules' 
 
-  - job: build
-    pool:
-      vmImage: ubuntu-latest
-    dependsOn: install
-    condition: succeeded()
-    steps:
-        - task: RestoreCache@1
-          inputs:
-            keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-            targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-            vstsFeed: '7fb370be-7369-4a9d-a42b-4d5e569e7587'
-            platformIndependent: true
-            alias: 'NPM Install'
-          displayName: 'Restore Cache Node Modules' 
-
         - script: npm run build 
           displayName: 'npm install and build'
         - task: CopyFiles@2
@@ -55,11 +40,3 @@ jobs:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
             ArtifactName: 'drop'
             publishLocation: 'Container'
-
-  # - job: test
-  #   pool:
-  #     vmImage: ubuntu-latest
-  #   steps:
-
-  #       - script: npm test
-  #         displayName: 'Run Unit Tests'
