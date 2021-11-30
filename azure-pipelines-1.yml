@@ -23,10 +23,10 @@ jobs:
         - task: RestoreAndSaveCache@1
           inputs:
             keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-            targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-            vstsFeed: 'a265092f-25f9-4a00-a1fc-7ce4509294ae'
+            targetfolder: '**/node_modules, !**/node_modules/**/node_modules'''
+            vstsFeed: 'f6a71ac1-5058-48e6-9e2e-edf7b5360e1b'
             platformIndependent: true
-            alias: 'npm_install_output'
+            alias: 'node_package_manager_modules'
 
         - script: npm run build 
           displayName: 'npm install and build'
