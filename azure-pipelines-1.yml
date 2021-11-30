@@ -6,6 +6,9 @@
 trigger:
 - none
 
+variables:
+  npm_config_cache: $(Pipeline.Workspace)/.npm
+
 jobs: 
   - job: install
     pool:
@@ -16,17 +19,21 @@ jobs:
           inputs:
             versionSpec: '10.x'
           displayName: 'Install Node.js'
-
-        - task: RestoreAndSaveCache@1
-          inputs:
-            keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-            targetfolder: '**/node_modules, !**/node_modules/**/node_modules'''
-            vstsFeed: 'f6a71ac1-5058-48e6-9e2e-edf7b5360e1b'
-            platformIndependent: true
-            alias: 'node_package_manager_modules'
         
-        - script: npm install
-          displayName: 'NPM Install'
+        - task: Cache@2
+          displayName: Cache node_modules
+          inputs:
+            key: 'npm | "$(Agent.OS)" | $(Build.SourcesDirectory)/package-lock.json'
+            path: $(Build.SourcesDirectory)/node_modules
+            cacheHitVar: CACHE_RESTORED
+
+        - task: Npm@1
+          displayName: 'Install the dependencies'
+          inputs:
+            command: custom
+            verbose: false
+            customCommand: 'ci'
+          condition: ne(variables.CACHE_RESTORED, 'true')
 
         - script: npm run build 
           displayName: 'npm install and build'
