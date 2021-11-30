@@ -19,13 +19,12 @@ jobs:
 
         - script: npm install
           displayName: 'NPM Install'
-        
+
         - task: RestoreAndSaveCache@1
-          displayName: "Caching"
           inputs:
             keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
             targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-            vstsFeed: '7fb370be-7369-4a9d-a42b-4d5e569e7587'
+            vstsFeed: 'a265092f-25f9-4a00-a1fc-7ce4509294ae'
             platformIndependent: true
             alias: 'npm_install_output'
 
