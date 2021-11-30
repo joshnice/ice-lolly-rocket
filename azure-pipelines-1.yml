@@ -10,7 +10,7 @@ variables:
   npm_config_cache: $(Pipeline.Workspace)/.npm
 
 jobs: 
-  - job: install
+  - job: build_application
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -21,7 +21,7 @@ jobs:
           displayName: 'Install Node.js'
         
         - task: Cache@2
-          displayName: Cache node_modules
+          displayName: 'Cache node_modules'
           inputs:
             key: 'npm | "$(Agent.OS)" | $(Build.SourcesDirectory)/package-lock.json'
             path: $(Build.SourcesDirectory)/node_modules
@@ -47,3 +47,39 @@ jobs:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
             ArtifactName: 'drop'
             publishLocation: 'Container'
+
+  - job: test_application
+    pool:
+      vmImage: "ubuntu-latest"
+    steps:
+        - task: NodeTool@0
+          inputs:
+            versionSpec: '10.x'
+          displayName: 'Install Node.js'
+        
+        - task: Cache@2
+          displayName: 'Cache node_modules'
+          inputs:
+            key: 'npm | "$(Agent.OS)" | $(Build.SourcesDirectory)/package-lock.json'
+            path: $(Build.SourcesDirectory)/node_modules
+            cacheHitVar: CACHE_RESTORED
+
+        - task: Npm@1
+          displayName: 'Install the dependencies'
+          inputs:
+            command: custom
+            verbose: false
+            customCommand: 'ci'
+          condition: ne(variables.CACHE_RESTORED, 'true')
+
+        - script: npm test
+          displayName: tests
+
+        - task: PublishTestResults@2
+          condition: succeededOrFailed()
+          inputs:
+            testRunner: JUnit
+            testResultsFiles: '**/test-results.xml'
+                
+        
+    
