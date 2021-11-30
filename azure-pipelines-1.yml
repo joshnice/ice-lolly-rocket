@@ -40,6 +40,9 @@ jobs:
             vstsFeed: '7fb370be-7369-4a9d-a42b-4d5e569e7587'
             platformIndependent: true
           displayName: 'Cache Node Modules' 
+        
+        - script: npm install
+          displayName: 'NPM Install'
 
         - script: npm run build 
           displayName: 'npm install and build'
@@ -54,10 +57,10 @@ jobs:
             ArtifactName: 'drop'
             publishLocation: 'Container'
 
-  - job: test
-    pool:
-      vmImage: ubuntu-latest
-    steps:
+  # - job: test
+  #   pool:
+  #     vmImage: ubuntu-latest
+  #   steps:
 
-        - script: npm test
-          displayName: 'Run Unit Tests'
+  #       - script: npm test
+  #         displayName: 'Run Unit Tests'
