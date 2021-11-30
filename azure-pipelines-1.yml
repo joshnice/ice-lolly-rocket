@@ -31,7 +31,7 @@ jobs:
     pool:
       vmImage: ubuntu-latest
     dependsOn: install
-    condition: sucess()
+    condition: succeeded()
     steps:
         - task: RestoreCache@1
           inputs:
@@ -40,7 +40,7 @@ jobs:
             vstsFeed: '7fb370be-7369-4a9d-a42b-4d5e569e7587'
             platformIndependent: true
           displayName: 'Cache Node Modules' 
-          
+
         - script: npm run build 
           displayName: 'npm install and build'
         - task: CopyFiles@2
